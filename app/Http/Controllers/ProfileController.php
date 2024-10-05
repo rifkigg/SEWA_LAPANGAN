@@ -25,7 +25,7 @@ class ProfileController extends Controller
      * Update the user's profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
+    {       
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
@@ -34,7 +34,13 @@ class ProfileController extends Controller
 
         // Menambahkan logika untuk mengubah avatar
         if ($request->hasFile('avatar')) {
+            // Debugging: Memeriksa apakah file avatar ada
+            // dd('File avatar ditemukan.', $request->file('avatar'));
+
             $path = $request->file('avatar')->store('avatars', 'public');
+            // Debugging: Menampilkan jalur file yang disimpan
+            // dd('Avatar disimpan di: ' . $path);
+
             $request->user()->avatar = $path;
         }
 
