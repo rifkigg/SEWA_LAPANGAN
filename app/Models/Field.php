@@ -20,4 +20,8 @@ class Field extends Model
     {
         return $this->belongsTo(User::class, 'owner_id', 'id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }
