@@ -15,16 +15,18 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        // dd('Validasi dipanggil'); // Debugging       
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'string',
                 'lowercase',
-                'email',
+                'email',    
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'avatar' => ['nullable', 'image', 'max:2048'], // Maksimal 2MB
         ];
-    }
+    }       
 }
