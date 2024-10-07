@@ -1,11 +1,14 @@
 <?php
 
+use App\Models\Field;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FieldController;
 use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
-    return view('welcome');
+    $fields = Field::all();
+    $totalFields = $fields->count();
+    return view('welcome', compact('fields', 'totalFields'));
 });
 
 Route::get('/dashboard', function () {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Field;
 use Illuminate\Http\Request;
+use App\Models\User; // Added for User model
 
 class FieldController extends Controller
 {
@@ -16,7 +17,8 @@ class FieldController extends Controller
     public function create()
     {
         $fields = Field::all();
-        return view('pages.field-create', compact('fields'));
+        $users = User::all(); // Ambil semua pengguna
+        return view('pages.field-create', compact('fields', 'users')); // Kirim pengguna ke view
     }
 
     public function store(Request $request)
@@ -52,7 +54,8 @@ class FieldController extends Controller
     public function edit($id)
     {
         $fields = Field::find($id);
-        return view('pages.field-edit', compact('fields'));
+        $users = User::all(); // Ambil semua pengguna
+        return view('pages.field-edit', compact('fields', 'users')); // Kirim pengguna ke view
     }
 
     public function update(Request $request, $id)
