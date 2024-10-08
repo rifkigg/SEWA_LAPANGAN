@@ -22,7 +22,7 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
-    /**     
+    /**
      * Handle an incoming registration request.
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -31,16 +31,16 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required'],
-            'avatar' => ['required'],
+            // 'avatar' => ['required'],
         ]);
 
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->password),   
+            'password' => Hash::make($request->password),
             'role' => $request->role,
             'avatar' => $request->avatar
         ]);
