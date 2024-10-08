@@ -3,6 +3,7 @@
 use App\Models\Field;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FieldController;
+use App\Http\Controllers\RentalController;
 use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
@@ -26,6 +27,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/fieldEdit/{id}', [FieldController::class, 'edit'])->name('field.edit');
     Route::put('/fieldUpdate/{id}', [FieldController::class, 'update'])->name('field.update');
     Route::delete('/fieldDestroy/{id}', [FieldController::class, 'destroy'])->name('field.destroy');
+
+    Route::get('/rental', [RentalController::class, 'index'])->name('rental.index');
+    Route::get('/rentalCreate', [RentalController::class, 'create'])->name('rental.create');
+    Route::post('/rentalStore', [RentalController::class, 'store'])->name('rental.store');
+    Route::get('/rentalEdit/{id}', [RentalController::class, 'edit'])->name('rental.edit');
+    Route::put('/rentalUpdate/{id}', [RentalController::class, 'update'])->name('rental.update');
+    Route::delete('/rentalDestroy/{id}', [RentalController::class, 'destroy'])->name('rental.destroy');
 });
 
 require __DIR__ . '/auth.php';

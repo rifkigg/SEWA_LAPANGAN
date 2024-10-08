@@ -11,14 +11,14 @@ class FieldController extends Controller
     public function index()
     {
         $fields = Field::all();
-        return view('pages.field', compact('fields'));
+        return view('pages.field.field', compact('fields'));
     }
 
     public function create()
     {
         $fields = Field::all();
         $users = User::all(); // Ambil semua pengguna
-        return view('pages.field-create', compact('fields', 'users')); // Kirim pengguna ke view
+        return view('pages.field.field-create', compact('fields', 'users')); // Kirim pengguna ke view
     }
 
     public function store(Request $request)
@@ -55,7 +55,7 @@ class FieldController extends Controller
     {
         $fields = Field::find($id);
         $users = User::all(); // Ambil semua pengguna
-        return view('pages.field-edit', compact('fields', 'users')); // Kirim pengguna ke view
+        return view('pages.field.field-edit', compact('fields', 'users')); // Kirim pengguna ke view
     }
 
     public function update(Request $request, $id)
