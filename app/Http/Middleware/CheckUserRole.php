@@ -22,6 +22,6 @@ class CheckUserRole
         }
 
         // Jika tidak, redirect atau abort
-        return redirect('/dashboard');
+        return $next($request);
     }
 }
