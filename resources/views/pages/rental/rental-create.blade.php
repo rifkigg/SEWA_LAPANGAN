@@ -7,22 +7,19 @@
     <title>Rental Create</title>
 </head>
 <body>
-    <p>Create Rental</p>
+    <p>Kamu Menyewa Lapangan : <span style="font-weight: bold;font-size: 1.5rem">{{ $field->name }}</span></p>
     <a href="{{ route('rental.index') }}" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Back</a>
-    <form action="{{ route('rental.store') }} " method="POST" enctype="multipart/form-data">
+    <form action="{{ route('rental.store') }} " method="POST" enctype="multipart/form-data" style="display: flex;flex-direction: column">
         @csrf
-        <label for="user_id">Name</label>
-        <input type="text" name="user_id" id="user_id" value="{{ Auth::user()->id }}" readonly>
-        <label for="field_id">Field</label>
-        <select name="field_id" id="field_id">
-            @foreach($fields as $field)
-                <option value="{{ $field->id }}">{{ $field->name }}</option>
+        <input type="text" name="user_id" id="user_id" value="{{ Auth::user()->id }}" hidden>
+        <input type="text" name="field_id" value="{{ $field->id }}" hidden>
+        {{-- <select name="field_id" id="field_id">
+            @foreach($fields as $item)
+                <option value="{{ $item->id }}">{{ $item->name }}</option>
             @endforeach
-        </select>
-        <label for="status">Status</label>
-        <input type="text" name="status" id="status" value="pending" readonly>
-        <label for="payment_status">Payment Status</label>
-        <input type="text" name="payment_status" id="payment_status" value="unpaid" readonly>
+        </select> --}}
+        <input type="text" name="status" id="status" value="pending" hidden>
+        <input type="text" name="payment_status" id="payment_status" value="unpaid" hidden>
         <label for="payment_method">Payment Method</label>
         <select name="payment_method" id="payment_method">
             <option value="cash">Cash</option>

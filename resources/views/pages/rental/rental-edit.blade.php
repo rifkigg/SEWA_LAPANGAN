@@ -9,7 +9,7 @@
 <body>
     <p>Edit Rental</p>
     <a href="{{ route('rental.index') }}" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Back</a>
-    <form action="{{ route('rental.update', $rental->id) }} " method="POST" enctype="multipart/form-data">
+    <form action="{{ route('rental.update', $rental->id) }} " method="POST" enctype="multipart/form-data" style="display: flex;flex-direction: column">
         @csrf
         @method('PUT')
         <label for="user_id">Name</label>

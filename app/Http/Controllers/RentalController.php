@@ -15,12 +15,13 @@ class RentalController extends Controller
         return view('pages.rental.rental', compact('rentals'));
     }
 
-    public function create()
+    public function create($id)
     {
+        $field = Field::find($id);
         $fields = Field::all();
         $users = User::all(); // Ambil semua pengguna
         $rentals = Rental::all();
-        return view('pages.rental.rental-create', compact('fields', 'users', 'rentals')); // Kirim pengguna ke view
+        return view('pages.rental.rental-create', compact('fields','field', 'users', 'rentals')); // Kirim pengguna ke view
     }
 
     public function store(Request $request)

@@ -14,6 +14,13 @@ class FieldController extends Controller
         return view('pages.field.field', compact('fields'));
     }
 
+    public function show($id)
+    {
+        $field = Field::find($id);
+        return view('pages.field.field-show', compact('field'));
+    }
+
+
     public function create()
     {
         $fields = Field::all();

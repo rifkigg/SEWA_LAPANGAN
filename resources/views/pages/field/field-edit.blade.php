@@ -9,7 +9,7 @@
 <body>
     <a href="{{ route('field.index') }}" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Back</a>
     <p>Edit Lapangan</p>
-    <form action="{{ route('field.update', $fields->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('field.update', $fields->id) }}" method="POST" enctype="multipart/form-data" style="display: flex;flex-direction: column">
         @csrf
         @method('PUT')
         <label for="name">Name</label>
