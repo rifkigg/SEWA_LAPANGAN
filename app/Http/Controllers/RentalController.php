@@ -85,4 +85,24 @@ class RentalController extends Controller
         $rental->delete();
         return redirect()->route('rental.index')->with('success', 'Rental deleted successfully.');
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'payment_status' => 'required',
+        ]);
+
+        $rental = Rental::find($id);
+        
+        // Tambahkan logika untuk mengubah status pembayaran
+        if ($request->payment_status === 'unpaid') {
+            $rental->payment_status = 'paid';
+        } elseif ($request->payment_status === 'paid') {
+            $rental->payment_status = 'unpaid';
+        }
+
+        $rental->save();
+
+        return redirect()->route('rental.index')->with('success', 'Status rental updated successfully.');
+    }
 }

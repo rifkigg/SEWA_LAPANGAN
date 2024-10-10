@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rental</title>
 </head>
+
 <body>
     <p>Rental</p>
     {{-- <a href="{{ route('rental.create', $field->id) }}" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Create Rental</a> --}}
@@ -29,7 +31,7 @@
             </tr>
             <tr>
                 <td>Harga lapangan yang di sewa</td>
-                <td>{{ $rental->field->price }}</td>
+                <td>Rp {{ number_format($rental->field->price, 0, ',', '.')}} / Jam</td>
             </tr>
             <tr>
                 <td>Deskripsi lapangan yang di sewa</td>
@@ -45,7 +47,9 @@
             </tr>
             <tr>
                 <td>Status pembayaran lapangan</td>
-                <td>{{ $rental->payment_status }}</td>
+                <td>
+                    {{ $rental->payment_status }}
+                </td>
             </tr>
             <tr>
                 <td>Metode pembayaran yang digunakan</td>
@@ -65,15 +69,28 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <form action="{{ route('rental.destroy', $rental->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <a href="{{ route('rental.edit', $rental->id) }}">Edit</a>
-                        <button type="submit">Delete</button>
-                    </form>
+                    <div style="display: flex; gap: 10px">
+                        <form action="{{ route('rental.destroy', $rental->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <a href="{{ route('rental.edit', $rental->id) }}">Edit</a>
+                            <button type="submit">Delete</button>
+                        </form>
+                        <form action="{{ route('rental.updateStatus', $rental->id) }}" method="POST"
+                            style="display:inline;">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" name="payment_status" value="{{ $rental->payment_status }}">
+                            <button type="submit"
+                                class="underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">
+                                {{ $rental->payment_status === 'paid' ? 'Mark as Unpaid' : 'Mark as Paid' }}
+                            </button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         </table>
     @endforeach
 </body>
+
 </html>
