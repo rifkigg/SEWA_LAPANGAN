@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/rentalEdit/{id}', [RentalController::class, 'edit'])->name('rental.edit');
         Route::put('/rentalUpdate/{id}', [RentalController::class, 'update'])->name('rental.update');
         Route::delete('/rentalDestroy/{id}', [RentalController::class, 'destroy'])->name('rental.destroy');
+        Route::put('/rental/updatePaymentStatus/{id}', [RentalController::class, 'updatePaymentStatus'])->name('rental.updatePaymentStatus');
         Route::put('/rental/updateStatus/{id}', [RentalController::class, 'updateStatus'])->name('rental.updateStatus');
     });
 });

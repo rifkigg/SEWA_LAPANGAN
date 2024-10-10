@@ -15,11 +15,12 @@
         <label for="user_id">Name</label>
         <input type="text" name="user_id" id="user_id" value="{{ old('user_id', $rental->user_id) }}" readonly>
         <label for="field_id">Field</label>
-        <select name="field_id" id="field_id">
+        <input type="text" name="field_id" id="field_id" value="{{ old('field_id', $rental->field_id) }}" readonly>
+        {{-- <select name="field_id" id="field_id">
             @foreach($fields as $field)
                 <option value="{{ $field->id }}" {{ old('field_id', $field->id) == $field->id ? 'selected' : '' }}>{{ $field->name }}</option>
             @endforeach
-        </select>
+        </select> --}}
         <label for="status">Status</label>
         <input type="text" name="status" id="status" value="{{ old('status', $rental->status) }}" readonly>
         <label for="payment_status">Payment Status</label>

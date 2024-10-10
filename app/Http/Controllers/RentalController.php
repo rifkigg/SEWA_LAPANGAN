@@ -11,9 +11,49 @@ class RentalController extends Controller
 {
     public function index()
     {
+        $now = now()->setTimezone('Asia/Jakarta'); // Waktu sekarang di timezone Asia/Jakarta
+        $currentTime = $now->format('H:i:s');      // Format waktu sekarang
+        $currentDate = $now->format('Y-m-d');      // Format tanggal sekarang
+        
         $rentals = Rental::all();
+        // $endTimes = $rentals->pluck('end_time'); // Mengambil semua end_time dari rentals
+        // dd($endTimes, $currentTime);
+        foreach ($rentals as $rental) {
+            // Jika status adalah 'cancelled', lewati rental ini
+            if ($rental->status === 'cancelled') {
+                continue;
+            }
+    
+            // Jika tanggal pemesanan sama dengan tanggal sekarang
+            if ($rental->booking_date === $currentDate) {
+
+                // Jika waktu sekarang lebih besar atau sama dengan `start_time`, ubah status menjadi 'active'
+                if ($currentTime >= $rental->start_time && $currentTime < $rental->end_time) {
+                    $rental->status = 'active';
+                }
+                // Jika waktu sekarang lebih besar atau sama dengan `end_time`, ubah status menjadi 'completed'
+                else if ($currentTime >= $rental->end_time) {
+                    $rental->status = 'completed';
+                }
+                // Jika waktu sekarang masih kurang dari `start_time`, ubah status menjadi 'pending'
+                else if ($currentTime < $rental->start_time) {
+                    $rental->status = 'pending';
+                }
+    
+                // Simpan perubahan status
+                $rental->save();
+            }
+            // Jika `booking_date` lebih besar dari tanggal sekarang dan `end_time` sudah lewat, set 'completed'
+            else if ($rental->booking_date > $currentDate && $currentTime >= $rental->end_time) {
+                $rental->status = 'completed';
+                $rental->save();
+            }
+        }
+
+
         return view('pages.rental.rental', compact('rentals'));
     }
+    
 
     public function create($id)
     {
@@ -21,7 +61,7 @@ class RentalController extends Controller
         $fields = Field::all();
         $users = User::all(); // Ambil semua pengguna
         $rentals = Rental::all();
-        return view('pages.rental.rental-create', compact('fields','field', 'users', 'rentals')); // Kirim pengguna ke view
+        return view('pages.rental.rental-create', compact('fields', 'field', 'users', 'rentals')); // Kirim pengguna ke view
     }
 
     public function store(Request $request)
@@ -86,14 +126,14 @@ class RentalController extends Controller
         return redirect()->route('rental.index')->with('success', 'Rental deleted successfully.');
     }
 
-    public function updateStatus(Request $request, $id)
+    public function updatePaymentStatus(Request $request, $id)
     {
         $request->validate([
             'payment_status' => 'required',
         ]);
 
         $rental = Rental::find($id);
-        
+
         // Tambahkan logika untuk mengubah status pembayaran
         if ($request->payment_status === 'unpaid') {
             $rental->payment_status = 'paid';
@@ -101,6 +141,19 @@ class RentalController extends Controller
             $rental->payment_status = 'unpaid';
         }
 
+        $rental->save();
+
+        return redirect()->route('rental.index')->with('success', 'Status rental updated successfully.');
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required',
+        ]);
+
+        $rental = Rental::find($id);
+        $rental->status = 'cancelled';
         $rental->save();
 
         return redirect()->route('rental.index')->with('success', 'Status rental updated successfully.');
