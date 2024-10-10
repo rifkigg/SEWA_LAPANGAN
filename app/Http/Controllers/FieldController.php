@@ -43,7 +43,7 @@ class FieldController extends Controller
         if ($request->hasFile('image')) {
             // Menyimpan gambar dan mendapatkan nama file
             $imageName = $request->file('image')->store('images', 'public');
-            
+
             // Menyimpan nama file ke database
             $field = new Field();
             $field->name = $request->name;
@@ -69,7 +69,6 @@ class FieldController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'price' => 'required',
             'location' => 'required',
             'owner_id' => 'required',
@@ -77,7 +76,24 @@ class FieldController extends Controller
         ]);
 
         $field = Field::find($id);
-        $field->update($request->all());
+        if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => 'mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+            if (file_exists(public_path('images/' . $field->image))) {
+                unlink(public_path('images/' . $field->image));
+            }
+            $imageName = $request->file('image')->store('images', 'public');
+            $field->image = $imageName;
+        }
+        $field->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'location' => $request->location,
+            'owner_id' => $request->owner_id,
+            'description' => $request->description,
+            'image' => $field->image,
+        ]);
         return redirect()->route('field.index')->with('success', 'Field updated successfully.');
     }
 
