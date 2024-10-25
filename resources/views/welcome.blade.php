@@ -10,7 +10,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="font-sans antialiased dark:bg-black dark:text-white/50">
@@ -21,7 +21,17 @@
                     class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
                     Dashboard
                 </a>
+            @else
+            <form method="POST" action="{{ route('logout') }}" onsubmit="return confirm('Kamu ingin log out?')">
+                @csrf
+    
+                <button type="submit" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
+                    {{ __('Log Out') }}
+                </button>
+            </form>
             @endif
+            <p>Selamat Datang {{ auth()->user()->username }}</p>
+            <img src="{{ auth()->user()->avatar }}" alt="">
         @else
             <a href="{{ route('login') }}"
                 class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
