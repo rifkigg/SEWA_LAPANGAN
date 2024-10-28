@@ -7,6 +7,7 @@
     <title>Fields</title>
 </head>
 <body>
+    {{-- <button onclick="history.back()">Back</button> --}}
     <a href="{{ route('field.create') }}">Tambah Lapangan</a>
     <table border="1">
         <tr>

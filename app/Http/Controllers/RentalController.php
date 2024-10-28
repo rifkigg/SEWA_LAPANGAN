@@ -76,6 +76,7 @@ class RentalController extends Controller
             'start_time' => 'required',
             'end_time' => 'required',
             'booking_date' => 'required',
+            'total_price' => 'required',
         ]);
         // dd($request->all());
         $rental = new Rental();
@@ -87,6 +88,7 @@ class RentalController extends Controller
         $rental->start_time = $request->start_time;
         $rental->end_time = $request->end_time;
         $rental->booking_date = $request->booking_date;
+        $rental->total_price = $request->total_price;
         $rental->save();
 
         return redirect()->route('rental.index')->with('success', 'Rental created successfully.');
@@ -112,6 +114,7 @@ class RentalController extends Controller
             'start_time' => 'required',
             'end_time' => 'required',
             'booking_date' => 'required',
+            'total_price' => 'required',
         ]);
 
         $rental = Rental::find($id);

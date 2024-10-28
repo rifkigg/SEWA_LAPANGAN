@@ -17,6 +17,7 @@ class Rental extends Model
         'start_time',
         'end_time',
         'booking_date',
+        'total_price',
     ];
     public function user()
     {

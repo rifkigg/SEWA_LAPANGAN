@@ -48,14 +48,19 @@
     @endif
     <h1 style="text-align: center">Selamat Datang di Sistem Sewa Lapangan</h1>
     <p> Jumlah lapangan : {{ $totalFields }}</p>
-    @foreach ($fields as $field)
-        <a href="{{ route('field.show', $field->id) }}" class="flex flex-col gap-2">
+    <div class="grid place-items-center gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    @forelse ($fields as $field)
+        <a href="{{ route('field.show', $field->id) }}">
             <img src="{{ asset('storage/' . $field->image) }}" alt="{{ $field->image }}"
-                style="aspect-ratio: 3/4; object-fit: contain; width: 300px;border-radius: 10px;border: 1px solid black">
+            style="aspect-ratio: 3/4; object-fit: contain; width: 300px;border-radius: 10px;border: 1px solid black">
             <h3 style="margin: 0">{{ $field->name }}</h3>
+            <h3 style="margin: 0">{{ $field->location }}</h3>
             <p style="margin: 3px 0 0 0; font-size: 0.8rem">Rp {{ number_format($field->price, 0, ',', '.') }} / Jam</p>
         </a>
-    @endforeach
+        @empty
+        <p>Tidak ada lapangan</p>
+        @endforelse
+    </div>
 </body>
 
 </html>

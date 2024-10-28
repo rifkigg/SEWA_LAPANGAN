@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Rental</title>
-</head>
-
-<body>
+<x-app-layout>
     <p>Rental</p>
     {{-- <a href="{{ route('rental.create', $field->id) }}" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Create Rental</a> --}}
     @foreach ($rentals as $rental)
@@ -70,6 +60,10 @@
                     <td>{{ $rental->booking_date }}</td>
                 </tr>
                 <tr>
+                    <td>Total harga</td>
+                    <td>Rp {{ number_format($rental->total_price, 0, ',', '.')}}</td>
+                </tr>
+                <tr>
                     <td colspan="2">
                         <div style="display: flex; gap: 10px">
                             <form action="{{ route('rental.destroy', $rental->id) }}" method="POST">
@@ -103,6 +97,4 @@
                 </tr>
         </table>
     @endforeach
-</body>
-
-</html>
+</x-app-layout>

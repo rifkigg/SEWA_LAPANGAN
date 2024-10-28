@@ -27,21 +27,7 @@
                 @yield('content')
             </div>
         </div>
-        
-        {{-- <script>
-            const themeToggle = document.getElementById('theme-toggle');
-            const currentTheme = localStorage.getItem('theme') || 'light';
-    
-            if (currentTheme === 'dark') {
-                document.documentElement.classList.add('dark');
-            }
-    
-            themeToggle.addEventListener('click', () => {
-                document.documentElement.classList.toggle('dark');
-                const newTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-                localStorage.setItem('theme', newTheme);
-            });
-        </script> --}}
-        <script src="https://kit.fontawesome.com/87dd173a0d.js" crossorigin="anonymous"></script>
+        <x-universal-script />
+
     </body>
 </html>
