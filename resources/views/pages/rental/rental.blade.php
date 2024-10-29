@@ -1,76 +1,55 @@
 <x-app-layout>
     <p>Rental</p>
     {{-- <a href="{{ route('rental.create', $field->id) }}" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Create Rental</a> --}}
-    @foreach ($rentals as $rental)
-        <table border="1" style="margin-bottom: 30px">
+    <table border="1" id="dataTables" class="display dark:text-white">
+        <thead>
             <tr>
-                <td>Rental status</td>
-                <td>{{ $rental->status }}</td>
+                <th class="text-center">No</th>
+                <th class="text-left">Nama</th>
+                <th class="text-left">Status</th>
+                <th class="text-left">Nama Lapangan</th>
+                <th class="text-right">Harga</th>
+                <th class="text-left">Owner</th>
+                <th class="text-left">Status Pembayaran</th>
+                <th class="text-left">Metode Pembayaran</th>
+                <th class="text-left">Tanggal Sewa</th>
+                <th class="text-right">Total Harga</th>
+                <th class="text-center">Aksi</th>
             </tr>
-            {{-- Tambahkan pengecekan untuk status cancelled --}}
-
+        </thead>
+        <tbody>
+            @foreach ($rentals as $rental)
                 <tr>
-                    <td>User yang nyewa</td>
-                    <td>{{ $rental->user->username }}</td>
-                </tr>
-                <tr>
-                    <td>Nama lapangan yang di sewa</td>
-                    <td>{{ $rental->field->name }}</td>
-                </tr>
-                <tr>
-                    <td>Lokasi lapangan yang di sewa</td>
-                    <td>{{ $rental->field->location }}</td>
-                </tr>
-                <tr>
-                    <td>Harga lapangan yang di sewa</td>
-                    <td>Rp {{ number_format($rental->field->price, 0, ',', '.')}} / Jam</td>
-                </tr>
-                <tr>
-                    <td>Deskripsi lapangan yang di sewa</td>
-                    <td>{{ $rental->field->description }}</td>
-                </tr>
-                <tr>
-                    <td>Pemilik lapangan yang di sewa</td>
-                    <td>{{ $rental->field->owner->username }}</td>
-                </tr>
-                <tr>
-                    <td>Image lapangan yang di sewa</td>
-                    <td><img src="{{ asset('storage/' . $rental->field->image) }}" alt="{{ $rental->field->image }}"></td>
-                </tr>
-                <tr>
-                    <td>Status pembayaran lapangan</td>
-                    <td>
-                        {{ $rental->payment_status }}
+                    <td class="text-center">{{ $loop->iteration }}</td>
+                    <td class="text-left">{{ $rental->user->username }}</td>
+                    <td class="text-left">
+                        {{ 
+                            $rental->status === "completed" ? "Selesai" : 
+                            ($rental->status === "cancelled" ? "Dibatalkan" : 
+                            ($rental->status === "pending" ? "Belum Mulai" : 
+                            "Sedang Bermain")) 
+                        }}
                     </td>
-                </tr>
-                <tr>
-                    <td>Metode pembayaran yang digunakan</td>
-                    <td>{{ $rental->payment_method }}</td>
-                </tr>
-                <tr>
-                    <td>Waktu mulai sewa</td>
-                    <td>{{ $rental->start_time }}</td>
-                </tr>
-                <tr>
-                    <td>Waktu akhir sewa</td>
-                    <td>{{ $rental->end_time }}</td>
-                </tr>
-                <tr>
-                    <td>Tanggal sewa</td>
-                    <td>{{ $rental->booking_date }}</td>
-                </tr>
-                <tr>
-                    <td>Total harga</td>
-                    <td>Rp {{ number_format($rental->total_price, 0, ',', '.')}}</td>
-                </tr>
-                <tr>
-                    <td colspan="2">
+                    <td class="text-left">{{ $rental->field->name }}</td>
+                    <td class="text-right">{{ number_format($rental->field->price, 0, ',', '.') }} / Jam</td>
+                    <td class="text-left">{{ $rental->field->owner->username }}</td>
+                    {{-- <td><img src="{{ asset('storage/' . $rental->field->image) }}" alt="{{ $rental->field->image }}"></td> --}}
+                    <td class="text-left">{{ $rental->payment_status == 'paid' ? 'Lunas' : 'Belum Lunas' }}</td>
+                    <td class="text-left">{{ $rental->payment_method == 'cash' ? 'Tunai' : 'Kredit' }}</td>
+                    <td class="text-left">
+                        {{ \Carbon\Carbon::parse($rental->booking_date)->locale('id')->translatedFormat('l') }}
+                        {{ \Carbon\Carbon::parse($rental->booking_date)->format('d/m/Y') }}
+                        {{ \Carbon\Carbon::parse($rental->start_time)->format('H:i') }} -
+                        {{ \Carbon\Carbon::parse($rental->end_time)->format('H:i') }}</td>
+                    <td class="text-right">{{ number_format($rental->total_price, 0, ',', '.') }}</td>
+                    <td class="text-center">
                         <div style="display: flex; gap: 10px">
-                            <form action="{{ route('rental.destroy', $rental->id) }}" method="POST">
+                            <form action="{{ route('rental.destroy', $rental->id) }}" method="POST"
+                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus rental ini?');">
                                 @csrf
                                 @method('DELETE')
                                 <a href="{{ route('rental.edit', $rental->id) }}">Edit</a>
-                                <button type="submit">Delete</button>
+                                <button type="submit">Hapus</button>
                             </form>
                             <form action="{{ route('rental.updatePaymentStatus', $rental->id) }}" method="POST"
                                 style="display:inline;">
@@ -79,7 +58,7 @@
                                 <input type="hidden" name="payment_status" value="{{ $rental->payment_status }}">
                                 <button type="submit"
                                     class="underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">
-                                    {{ $rental->payment_status === 'paid' ? 'Mark as Unpaid' : 'Mark as Paid' }}
+                                    {{ $rental->payment_status === 'paid' ? 'Ubah ke Belum Lunas' : 'Ubah ke Lunas' }}
                                 </button>
                             </form>
                             <form action="{{ route('rental.updateStatus', $rental->id) }}" method="POST"
@@ -89,12 +68,60 @@
                                 <input type="hidden" name="status" value="{{ $rental->status }}">
                                 <button type="submit"
                                     class="underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">
-                                    Ganti jadi cancelled
+                                    Ganti jadi Batal
                                 </button>
                             </form>
                         </div>
                     </td>
                 </tr>
-        </table>
-    @endforeach
+            @endforeach
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function() {
+            $('#dataTables').DataTable({
+                paging: false, // Menonaktifkan pagination
+                lengthChange: false, // Menyembunyikan dropdown "entries per page"
+                info: false, // Menyembunyikan informasi "Showing X to Y of Z entries"
+                searching: false, // Menyembunyikan search bar
+                columnDefs: [{
+                        targets: [0, 6, 7],
+                        className: 'text-center'
+                    }, // No, Image, Action
+                    {
+                        targets: 4,
+                        className: 'text-right'
+                    } // Price
+                ],
+                dom: 't',
+                language: {
+                    emptyTable: "No data available" // Mengatur pesan jika tabel kosong
+                }
+            });
+        });
+    </script>
+
+    <style>
+        /* Custom CSS untuk memastikan align bekerja */
+        th.text-right,
+        td.text-right {
+            text-align: right !important;
+        }
+
+        th.text-center,
+        td.text-center {
+            text-align: center !important;
+        }
+
+        th.text-left,
+        td.text-left {
+            text-align: left !important;
+        }
+
+        .dataTables_length,
+        .dataTables_info,
+        .dataTables_filter {
+            display: none !important;
+        }
+    </style>
 </x-app-layout>
