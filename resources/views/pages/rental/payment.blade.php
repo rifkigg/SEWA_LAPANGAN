@@ -11,11 +11,18 @@
     <h1>Payment</h1>
     <button id="pay-button">Bayar</button>
 
+    <form action="{{ route('rental.updatePaymentStatus', $rental->id) }}" id="updatePaymentStatus" method="POST">
+        @csrf
+        @method('PUT')
+        <input type="text" name="payment_status" value="paid">
+    </form>
+
     <script>
         document.getElementById('pay-button').onclick = function() {
             window.snap.pay('{{ $snapToken }}', {
                 onSuccess: function(result) {
                     alert('Pembayaran berhasil!');
+                    document.getElementById('updatePaymentStatus').submit();
                     // Update status pembayaran di server
                     fetch(`/rental/update-payment-status/${result.order_id}`, {
                         method: 'POST',

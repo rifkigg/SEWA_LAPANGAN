@@ -126,7 +126,7 @@ class RentalController extends Controller
 
         try {
             $snapToken = Snap::getSnapToken($params);
-            return view('pages.rental.payment', compact('snapToken'));
+            return view('pages.rental.payment', compact('snapToken', 'rental'));
         } catch (\Exception $e) {
             return redirect()->route('rental.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }

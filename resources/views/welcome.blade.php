@@ -22,16 +22,18 @@
                     Dashboard
                 </a>
             @else
-            <form method="POST" action="{{ route('logout') }}" onsubmit="return confirm('Kamu ingin log out?')">
-                @csrf
-    
-                <button type="submit" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
-                    {{ __('Log Out') }}
-                </button>
-            </form>
+                <form method="POST" action="{{ route('logout') }}" onsubmit="return confirm('Kamu ingin log out?')">
+                    @csrf
+
+                    <button type="submit"
+                        class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
+                        {{ __('Log Out') }}
+                    </button>
+                </form>
             @endif
             <p>Selamat Datang {{ auth()->user()->username }}</p>
-            <img src="{{ auth()->user()->avatar }}" alt="">
+            <img src="{{ auth()->user()->avatar }}" alt="" width="100" class="rounded-full">
+            <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="" width="100" class="rounded-full">
         @else
             <a href="{{ route('login') }}"
                 class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
@@ -49,16 +51,17 @@
     <h1 style="text-align: center">Selamat Datang di Sistem Sewa Lapangan</h1>
     <p> Jumlah lapangan : {{ $totalFields }}</p>
     <div class="grid place-items-center gap-6 sm:grid-cols-2 lg:grid-cols-4">
-    @forelse ($fields as $field)
-        <a href="{{ route('field.show', $field->id) }}">
-            <img src="{{ asset('storage/' . $field->image) }}" alt="{{ $field->image }}"
-            style="aspect-ratio: 3/4; object-fit: contain; width: 300px;border-radius: 10px;border: 1px solid black">
-            <h3 style="margin: 0">{{ $field->name }}</h3>
-            <h3 style="margin: 0">{{ $field->location }}</h3>
-            <p style="margin: 3px 0 0 0; font-size: 0.8rem">Rp {{ number_format($field->price, 0, ',', '.') }} / Jam</p>
-        </a>
+        @forelse ($fields as $field)
+            <a href="{{ route('field.show', $field->id) }}">
+                <img src="{{ asset('storage/' . $field->image) }}" alt="{{ $field->image }}"
+                    style="aspect-ratio: 3/4; object-fit: contain; width: 300px;border-radius: 10px;border: 1px solid black">
+                <h3 style="margin: 0">{{ $field->name }}</h3>
+                <h3 style="margin: 0">{{ $field->location }}</h3>
+                <p style="margin: 3px 0 0 0; font-size: 0.8rem">Rp {{ number_format($field->price, 0, ',', '.') }} /
+                    Jam</p>
+            </a>
         @empty
-        <p>Tidak ada lapangan</p>
+            <p>Tidak ada lapangan</p>
         @endforelse
     </div>
 </body>

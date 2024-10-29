@@ -37,3 +37,6 @@
 <script>
     new DataTable('#dataTables');
 </script>
+
+{{-- Alpine JS --}}
+<script src="//unpkg.com/alpinejs" defer></script>
