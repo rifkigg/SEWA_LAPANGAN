@@ -6,9 +6,20 @@ use App\Models\Field;
 use App\Models\User;
 use App\Models\Rental;
 use Illuminate\Http\Request;
+use Midtrans\Snap;
+use Midtrans\Config;
 
 class RentalController extends Controller
 {
+    public function __construct()
+    {
+        // Konfigurasi Midtrans
+        Config::$serverKey = config('services.midtrans.server_key');
+        Config::$isProduction = config('services.midtrans.is_production');
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
+    }
+    
     public function index()
     {
         $now = now()->setTimezone('Asia/Jakarta'); // Waktu sekarang di timezone Asia/Jakarta
@@ -91,7 +102,34 @@ class RentalController extends Controller
         $rental->total_price = $request->total_price;
         $rental->save();
 
-        return redirect()->route('rental.index')->with('success', 'Rental created successfully.');
+        return redirect()->route('rental.process', $rental->id);
+    }
+
+    public function process($id)
+    {
+        $rental = Rental::find($id);
+        if (!$rental) {
+            return redirect()->route('rental.index')->with('error', 'Rental tidak ditemukan.');
+        }
+
+        // Siapkan parameter untuk Midtrans
+        $params = [
+            'transaction_details' => [
+                'order_id' => 'ORDER-' . $rental->id,
+                'gross_amount' => $rental->total_price,
+            ],
+            'customer_details' => [
+                'first_name' => $rental->user->username, // Ganti dengan nama user yang sebenarnya
+                'email' => $rental->user->email, // Ganti dengan email user yang sebenarnya
+            ],
+        ];
+
+        try {
+            $snapToken = Snap::getSnapToken($params);
+            return view('pages.rental.payment', compact('snapToken'));
+        } catch (\Exception $e) {
+            return redirect()->route('rental.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     public function edit($id)

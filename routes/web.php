@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/rentalCreate/{id}', [RentalController::class, 'create'])->name('rental.create');
     Route::post('/rentalStore', [RentalController::class, 'store'])->name('rental.store');
+    Route::get('/rental/process/{id}', [RentalController::class, 'process'])->name('rental.process');
     
     Route::group(['middleware' => [CheckUserRole::class]], function () {
         Route::get('/dashboard', function () {
