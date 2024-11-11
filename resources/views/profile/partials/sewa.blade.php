@@ -11,7 +11,7 @@
 
     @forelse ($rentals as $rental)
         <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg dark:text-white relative">
-            <div class="font-bold absolute top-1 left-1 dark:bg-white dark:text-gray-800 bg-gray-800 text-white w-8 h-8 rounded-full flex items-center justify-center">{{ $loop->iteration }}</div>
+            {{-- <div class="font-bold absolute top-1 left-1 dark:bg-white dark:text-gray-800 bg-gray-800 text-white w-8 h-8 rounded-full flex items-center justify-center">{{ $loop->iteration }}</div> --}}
             <p>Nama Lapangan : {{ $rental->field->name }}</p>
             <p>Lokasi Lapangan : {{ $rental->field->location }}</p>
             <p>Total Harga : Rp {{ number_format($rental->total_price, 0, ',', '.') }}</p>
