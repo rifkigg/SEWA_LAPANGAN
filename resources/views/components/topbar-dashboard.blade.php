@@ -46,23 +46,24 @@ class="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowr
       <a
         href="#pablo"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        >Action</a
+        >Profile</a
       ><a
         href="#pablo"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        >Another action</a
-      ><a
-        href="#pablo"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        >Something else here</a
+        >Settings</a
       >
+      {{-- <a
+        href="#pablo"
+        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+        ><x-change-theme-list/></a
+      > --}}
       <div
         class="h-0 my-2 border border-solid border-blueGray-100"
       ></div>
       <a
         href="#pablo"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        >Seprated link</a
+        ><x-change-theme-list/></a
       >
     </div>
   </ul>
