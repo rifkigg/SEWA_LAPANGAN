@@ -35,6 +35,8 @@ class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 
         >
       </li>
     </ul> --}}
+    @if (Auth::check())
+        
     <ul
       class="flex flex-col lg:flex-row list-none lg:ml-auto items-center"
     >
@@ -44,17 +46,13 @@ class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 
           href="#pablo"
           onclick="openDropdown(event,'demo-pages-dropdown')"
         >
-          Demo Pages
+          <img src="{{ auth()->user()->avatar }}" alt="" class="rounded-full">
+          <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="" class="h-6 w-6 rounded-full">
         </a>
         <div
           class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 navbar-popper"
           id="demo-pages-dropdown"
         >
-          <span
-            class="text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-400"
-          >
-            Admin Layout
-          </span>
           <a
             href="{{ route('dashboard') }}"
             class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
@@ -68,52 +66,6 @@ class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 
             Settings
           </a>
           <a
-            href="./pages/admin/tables.html"
-            class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          >
-            Tables
-          </a>
-          <a
-            href="./pages/admin/maps.html"
-            class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          >
-            Maps
-          </a>
-          <div
-            class="h-0 mx-4 my-2 border border-solid border-blueGray-100"
-          ></div>
-          <span
-            class="text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-400"
-          >
-            Auth Layout
-          </span>
-          <a
-            href="./pages/auth/login.html"
-            class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          >
-            Login
-          </a>
-          <a
-            href="./pages/auth/register.html"
-            class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          >
-            Register
-          </a>
-          <div
-            class="h-0 mx-4 my-2 border border-solid border-blueGray-100"
-          ></div>
-          <span
-            class="text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-400"
-          >
-            No Layout
-          </span>
-          <a
-            href="./pages/landing.html"
-            class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          >
-            Landing
-          </a>
-          <a
             href="./pages/profile.html"
             class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           >
@@ -124,6 +76,18 @@ class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 
           </div>
         </div>
       </li>
+      @else
+      <ul class="flex flex-col lg:flex-row list-none lg:ml-auto items-center">
+        <li class="flex items-center">
+          <a
+          class="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+          href="{{ route('login') }}"
+          target="_blank"
+          >Login</a
+          >
+        </li>
+      </ul>
+    @endif
       {{-- <li class="flex items-center">
         <a
           class="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
