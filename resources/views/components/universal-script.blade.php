@@ -299,3 +299,10 @@
         document.getElementById(dropdownID).classList.toggle("block");
     }
 </script>
+
+{{-- Leaflet --}}
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+{{-- Leaflet Geocoder --}}
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>

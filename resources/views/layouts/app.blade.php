@@ -26,6 +26,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- Tailwind dari notus JS --}}
     <link rel="stylesheet" href="{{ asset('assets/styles/tailwind.css') }}" />
+
+    {{-- leaflet --}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    {{-- Leaflet Geocoder --}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 </head>
 
 <body class="text-blueGray-700 antialiased">
