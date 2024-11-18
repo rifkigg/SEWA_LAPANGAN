@@ -4,37 +4,19 @@ class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 
 <div
   class="container px-4 mx-auto flex flex-wrap items-center justify-between"
 >
-  <div
+  {{-- <div
     class="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start"
-  >
+  > --}}
     <a
       class="text-blueGray-700 text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
       href="#"
       >LapanganKu</a
-    ><button
+    >
+    {{-- <button
       class="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
       type="button"
       onclick="toggleNavbar('example-collapse-navbar')"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
-  </div>
-  <div
-    class="lg:flex flex-grow items-center bg-white lg:bg-opacity-0 lg:shadow-none hidden"
-    id="example-collapse-navbar"
-  >
-    {{-- <ul class="flex flex-col lg:flex-row list-none mr-auto">
-      <li class="flex items-center">
-        <a
-          class="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-          href="https://www.creative-tim.com/learning-lab/tailwind/js/overview/notus?ref=njs-index"
-          ><i
-            class="text-blueGray-400 far fa-file-alt text-lg leading-lg mr-2"
-          ></i>
-          Docs</a
-        >
-      </li>
-    </ul> --}}
+    > --}}
     @if (Auth::check())
         
     <ul
@@ -42,12 +24,14 @@ class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 
     >
       <li class="inline-block relative">
         <a
-          class="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-          href="#pablo"
+          class="hover:text-blueGray-500 text-blueGray-700 px-3 flex items-center text-xs uppercase font-bold cursor-pointer"
           onclick="openDropdown(event,'demo-pages-dropdown')"
         >
-          <img src="{{ auth()->user()->avatar }}" alt="" class="rounded-full">
-          <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="" class="h-6 w-6 rounded-full">
+        @if(auth()->user()->avatar && file_exists(public_path('storage/' . auth()->user()->avatar)))
+            <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="User Avatar" class="w-10 h-10 rounded-full">
+        @else 
+            <img src="{{ auth()->user()->avatar }}" alt="Default Avatar" class="w-10 h-10 rounded-full">
+        @endif
         </a>
         <div
           class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48 navbar-popper"
@@ -55,7 +39,7 @@ class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 
         >
           <a
             href="{{ route('dashboard') }}"
-            class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+            class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700{{ Auth::user()->role == 'admin' || Auth::user()->role == 'owner' ? '' : ' hidden' }}"
           >
             Dashboard
           </a>
@@ -66,7 +50,7 @@ class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 
             Settings
           </a>
           <a
-            href="./pages/profile.html"
+            href="{{ route('profile.edit') }}"
             class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           >
             Profile
@@ -76,6 +60,7 @@ class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 
           </div>
         </div>
       </li>
+    </ul>
       @else
       <ul class="flex flex-col lg:flex-row list-none lg:ml-auto items-center">
         <li class="flex items-center">
@@ -88,6 +73,25 @@ class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 
         </li>
       </ul>
     @endif
+    {{-- </button> --}}
+  </div>
+  {{-- <div
+    class="lg:flex flex-grow items-center bg-white lg:bg-opacity-0 lg:shadow-none hidden"
+    id="example-collapse-navbar"
+  > --}}
+    {{-- <ul class="flex flex-col lg:flex-row list-none mr-auto">
+      <li class="flex items-center">
+        <a
+          class="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+          href="https://www.creative-tim.com/learning-lab/tailwind/js/overview/notus?ref=njs-index"
+          ><i
+            class="text-blueGray-400 far fa-file-alt text-lg leading-lg mr-2"
+          ></i>
+          Docs</a
+        >
+      </li>
+    </ul> --}}
+   
       {{-- <li class="flex items-center">
         <a
           class="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
@@ -129,7 +133,7 @@ class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 
           <i class="fas fa-arrow-alt-circle-down"></i> Download
         </button>
       </li> --}}
-    </ul>
-  </div>
-</div>
+ 
+  {{-- </div> --}}
+{{-- </div> --}}
 </nav>

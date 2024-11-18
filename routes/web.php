@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    Route::get('/field/{id}', [FieldController::class, 'show'])->name('field.show');
+    Route::get('/field/show/{id}', [FieldController::class, 'show'])->name('field.show');
     
     Route::get('/rentalCreate/{id}', [RentalController::class, 'create'])->name('rental.create');
     Route::post('/rentalStore', [RentalController::class, 'store'])->name('rental.store');
@@ -38,20 +38,24 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', function () {
             return view('dashboard');
         })->name('dashboard');
+        
+        Route::group(['prefix' => 'field'], function () {
+            Route::get('/', [FieldController::class, 'index'])->name('field.index');
+            Route::get('/create', [FieldController::class, 'create'])->name('field.create');
+            Route::post('/store', [FieldController::class, 'store'])->name('field.store');
+            Route::get('/edit/{id}', [FieldController::class, 'edit'])->name('field.edit');
+            Route::put('/update/{id}', [FieldController::class, 'update'])->name('field.update');
+            Route::delete('/destroy/{id}', [FieldController::class, 'destroy'])->name('field.destroy');
+        });
 
-        Route::get('/field', [FieldController::class, 'index'])->name('field.index');
-        Route::get('/fieldCreate', [FieldController::class, 'create'])->name('field.create');
-        Route::post('/fieldStore', [FieldController::class, 'store'])->name('field.store');
-        Route::get('/fieldEdit/{id}', [FieldController::class, 'edit'])->name('field.edit');
-        Route::put('/fieldUpdate/{id}', [FieldController::class, 'update'])->name('field.update');
-        Route::delete('/fieldDestroy/{id}', [FieldController::class, 'destroy'])->name('field.destroy');
-
-        Route::get('/rental', [RentalController::class, 'index'])->name('rental.index');
-        Route::get('/rentalEdit/{id}', [RentalController::class, 'edit'])->name('rental.edit');
-        Route::put('/rentalUpdate/{id}', [RentalController::class, 'update'])->name('rental.update');
-        Route::delete('/rentalDestroy/{id}', [RentalController::class, 'destroy'])->name('rental.destroy');
-        Route::put('/rental/updatePaymentStatus/{id}', [RentalController::class, 'updatePaymentStatus'])->name('rental.updatePaymentStatus');
-        Route::put('/rental/updateStatus/{id}', [RentalController::class, 'updateStatus'])->name('rental.updateStatus');
+        Route::group(['prefix' => 'rental'], function () {
+            Route::get('/', [RentalController::class, 'index'])->name('rental.index');
+            Route::get('/edit/{id}', [RentalController::class, 'edit'])->name('rental.edit');
+            Route::put('/update/{id}', [RentalController::class, 'update'])->name('rental.update');
+            Route::delete('/destroy/{id}', [RentalController::class, 'destroy'])->name('rental.destroy');
+            Route::put('/updatePaymentStatus/{id}', [RentalController::class, 'updatePaymentStatus'])->name('rental.updatePaymentStatus');
+            Route::put('/updateStatus/{id}', [RentalController::class, 'updateStatus'])->name('rental.updateStatus');
+        });
     });
 });
 Route::get('/auth/{provider}', function ($provider) {

@@ -20,7 +20,6 @@ class FieldController extends Controller
         return view('pages.field.field-show', compact('field'));
     }
 
-
     public function create()
     {
         $fields = Field::all();

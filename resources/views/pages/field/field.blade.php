@@ -1,7 +1,10 @@
-<x-app-layout>
+@extends('layouts.dashboard')
+
+@section('content')
     {{-- <button onclick="history.back()">Back</button> --}}
-    <a href="{{ route('field.create') }}">Tambah Lapangan</a>
-    <table border="1" id="dataTables" class="display dark:text-white" style="width:100%">
+    <a href="{{ route('field.create') }}" class="rounded-lg bg-pink-600 p-2 text-white font-medium shadow-md hover:bg-pink-500 hover:text-gray-100 hover:shadow-sm">Tambah Lapangan</a>
+    <section class="w-[100%] overflow-auto">
+    <table id="dataTables" class="display dark:text-white" style="width:100%">
         <thead>
             <tr>
                 <th class="text-center">No</th>
@@ -39,8 +42,9 @@
             @endforeach
         </tbody>
     </table>
+    </section>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#dataTables').DataTable({
                 paging: false, // Menonaktifkan pagination
@@ -86,5 +90,5 @@
         .dataTables_filter {
             display: none !important;
         }
-    </style>
-</x-app-layout>
+    </style> --}}
+@endsection

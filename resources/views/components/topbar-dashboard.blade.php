@@ -1,14 +1,14 @@
 <nav
-class="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-start flex items-center p-4"
+class="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-start flex items-center p-4 md:bg-pink-600"
 >
 <div
-  class="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4"
+  class="w-full mx-autp items-center flex justify-end md:flex-nowrap flex-wrap md:px-10 px-4"
 >
-  <a
+  {{-- <a
     class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
     href="./index.html"
     >Dashboard</a
-  >
+  > --}}
   {{-- <form
     class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3"
   >
@@ -28,43 +28,26 @@ class="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowr
     class="flex-col md:flex-row list-none items-center hidden md:flex"
   >
     <a
-      class="text-blueGray-500 block"
-      href="#pablo"
+      class="text-blueGray-500 block cursor-pointer"
       onclick="openDropdown(event,'user-dropdown')"
     >
       <div class="items-center flex">
         <span
           class="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full"
-          ><img src="{{ auth()->user()->avatar }}" alt="" class="rounded-full">
-          <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="" class="h-6 w-6 rounded-full"></span>
+          >
+          @if(auth()->user()->avatar && file_exists(public_path('storage/' . auth()->user()->avatar)))
+              <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="User Avatar" class="w-10 h-10 rounded-full">
+          @else 
+              <img src="{{ auth()->user()->avatar }}" alt="Default Avatar" class="w-10 h-10 rounded-full border">
+          @endif
+        </span>
       </div>
     </a>
     <div
       class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
       id="user-dropdown"
     >
-      <a
-        href="#pablo"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        >Profile</a
-      ><a
-        href="#pablo"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        >Settings</a
-      >
-      {{-- <a
-        href="#pablo"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        ><x-change-theme-list/></a
-      > --}}
-      <div
-        class="h-0 my-2 border border-solid border-blueGray-100"
-      ></div>
-      <a
-        href="#pablo"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        ><x-change-theme-list/></a
-      >
+        @include('components.navbar-dashboard-list')
     </div>
   </ul>
 </div>

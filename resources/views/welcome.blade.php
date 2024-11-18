@@ -51,23 +51,17 @@
         @endforelse
     </div> --}}
     <section class="header relative pt-16 items-center flex h-screen max-h-860-px">
-        <div class="container mx-auto items-center flex flex-wrap">
+        <div class="container mx-auto items-center flex flex-wrap justify-center z-10">
             <div class="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4">
-                <div class="pt-32 sm:pt-0">
-                    <h2 class="font-semibold text-4xl text-blueGray-600">
-                        Notus Tailwind JS - A beautiful extension for Tailwind CSS.
+                <div class="pt-32 sm:pt-0 text-center">
+                    <h2 class="font-semibold text-4xl text-blueGray-600 dark:text-gray-200">
+                        Selamat datang di LapanganKu
                     </h2>
-                    <p class="mt-4 text-lg leading-relaxed text-blueGray-500">
-                        Notus Tailwind JS is Free and Open Source. It does not change any
-                        of the CSS from
-                        <a href="https://tailwindcss.com/?ref=creativetim" class="text-blueGray-600" target="_blank">
-                            Tailwind CSS.
-                        </a>
-                        It features multiple HTML elements and it comes with dynamic
-                        components for ReactJS, Vue and Angular.
+                    <p class="mt-4 text-lg leading-relaxed text-blueGray-700 dark:text-gray-300">
+                        Disini kalian dapat menyewa lapangan sesuai kebutuhanmu. Dan kalian juga dapat melihat lapangan yang tersedia.
                     </p>
                     <div class="mt-12">
-                        <a href="https://www.creative-tim.com/learning-lab/tailwind/js/overview/notus?ref=njs-index"
+                        {{-- <a href="https://www.creative-tim.com/learning-lab/tailwind/js/overview/notus?ref=njs-index"
                             target="_blank"
                             class="get-started text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-pink-500 active:bg-pink-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150">
                             Get started
@@ -76,17 +70,23 @@
                             class="github-star ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-blueGray-700 active:bg-blueGray-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
                             target="_blank">
                             Github Star
-                        </a>
+                        </a> --}}
+
+                        {{-- Search Field --}}
+                        <form action="">
+                            <input type="text" name="search" id="search" placeholder="Search..." 
+                                class="border border-blueGray-300 px-3 py-3 placeholder-blueGray-600 text-blueGray-600 relative bg-white rounded-full text-sm shadow outline-none focus:outline-none focus:ring-pink-500 focus:border-pink-600 w-full pl-10">
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
 
-        <img class="absolute top-0 b-auto right-0 pt-16 sm:w-6/12 -mt-48 sm:mt-0 w-10/12 max-h-860-px"
+        <img class="absolute top-0 right-0 b-auto pt-16 sm:w-6/12 -mt-48 sm:mt-0 w-10/12 max-h-860-px z-0"
             src="./assets/img/ill_header_3.png" alt="..." />
     </section>
 
-    <section class="mt-48 md:mt-40 pb-40 relative bg-blueGray-100">
+    {{-- <section class="mt-48 md:mt-40 pb-40 relative bg-blueGray-100">
         <div class="-mt-20 top-0 bottom-auto left-0 right-0 w-full absolute h-20" style="transform: translateZ(0)">
             <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
                 version="1.1" viewBox="0 0 2560 100" x="0" y="0">
@@ -471,27 +471,31 @@
                 </p>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <section class="block relative z-1 bg-blueGray-600">
         <div class="container mx-auto">
             <div class="justify-center flex flex-wrap">
                 <div class="w-full lg:w-12/12 px-4 -mt-24">
                     <div class="flex flex-wrap">
-                        <div class="w-full lg:w-4/12 px-4">
-                            <h5 class="text-xl font-semibold pb-4 text-center">
-                                Login Page
-                            </h5>
-                            <a href="./pages/auth/login.html">
-                                <div
-                                    class="hover:-mt-4 relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg ease-linear transition-all duration-150">
-                                    <img alt="..." class="align-middle border-none max-w-full h-auto rounded-lg"
-                                        src="./assets/img/login.jpg" />
-                                </div>
-                            </a>
-                        </div>
+                        @forelse ($fields as $field)
+                            <div class="w-full lg:w-4/12 px-4">
+                                <h5 class="text-xl font-semibold pb-4 text-center">
+                                    {{ $field->name }}
+                                </h5>
+                                <a href="{{ route('field.show', $field->id) }}">
+                                    <div
+                                        class="hover:-mt-4 relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg ease-linear transition-all duration-150">
+                                        <img alt="{{ $field->image }}" class="align-middle border-none max-w-full h-[200px] rounded-lg"
+                                            src="{{ asset('storage/' . $field->image) }}" />
+                                    </div>
+                                </a>
+                            </div>
+                        @empty
+                            <p>Tidak ada lapangan</p>
+                        @endforelse
 
-                        <div class="w-full lg:w-4/12 px-4">
+                        {{-- <div class="w-full lg:w-4/12 px-4">
                             <h5 class="text-xl font-semibold pb-4 text-center">
                                 Profile Page
                             </h5>
@@ -515,14 +519,14 @@
                                         src="./assets/img/landing.jpg" />
                                 </div>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-20 bg-blueGray-600 overflow-hidden">
+    {{-- <section class="py-20 bg-blueGray-600 overflow-hidden">
         <div class="container mx-auto pb-64">
             <div class="flex flex-wrap justify-center">
                 <div class="w-full md:w-5/12 px-12 md:px-4 ml-auto mr-auto md:mt-64">
@@ -598,6 +602,6 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <x-footer />
 </x-app-layout>
