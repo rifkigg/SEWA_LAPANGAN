@@ -1,5 +1,6 @@
-<x-app-layout>
-    <p>Rental</p>
+@extends('layouts.dashboard')
+
+@section('content')
     {{-- <a href="{{ route('rental.create', $field->id) }}" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Create Rental</a> --}}
     <table border="1" id="dataTables" class="display dark:text-white">
         <thead>
@@ -124,4 +125,4 @@
             display: none !important;
         }
     </style>
-</x-app-layout>
+@endsection

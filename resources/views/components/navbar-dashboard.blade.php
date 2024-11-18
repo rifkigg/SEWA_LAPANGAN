@@ -123,6 +123,16 @@ class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:fl
         </a>
       </li>
 
+      <li class="items-center"> 
+        <a
+          href="{{ route('rental.index') }}"
+          class="text-xs uppercase py-3 font-bold block {{ Route::currentRouteName() == 'rental.index' ? 'text-pink-500 hover:text-pink-600' : 'text-blueGray-600 hover:text-blueGray-500' }}"
+        >
+          <i class="fas fa-table mr-2 text-sm"></i>
+          Sewa
+        </a>
+      </li>
+
       {{-- <li class="items-center">
         <a
           href="#"
